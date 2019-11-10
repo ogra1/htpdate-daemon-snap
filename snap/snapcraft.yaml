@@ -13,6 +13,17 @@ description: |
  .
  Htpdate works through proxy servers. Accuracy of htpdate will be usually
  within 0.5 seconds (better with multiple servers). 
+ .
+ To allow the snap package to adjust the time you need to connect the
+ time-control interface after installation and restart the daemon:
+ .
+ snap connect htpdate-daemon:time-control
+ snap restart htpdate-daemon
+ .
+ You can set the list of hosts (default: www.ubuntu.com) to query for time
+ via a snap setting like:
+ .
+ snap set htpdate-daemon hosts="www.ubuntu.com www.canonical.com"
 
 grade: stable
 confinement: strict

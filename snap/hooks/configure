@@ -1,0 +1,6 @@
+#! /bin/sh
+
+# set defaults if unset
+[ -n "$(snapctl get hosts)" ] || snapctl set hosts="www.ubuntu.com"
+
+snapctl restart $SNAP_NAME
