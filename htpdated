@@ -15,4 +15,4 @@ if [ -e "$PIDFILE" ]; then
 	rm $PIDFILE
 fi
 
-htpdate -D -s -i "$PIDFILE" "$HOSTS"
+htpdate -D -s -i "$PIDFILE" $HOSTS
