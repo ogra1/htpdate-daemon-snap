@@ -1,0 +1,22 @@
+diff --git a/htpdate.c b/htpdate.c
+index e67d2c0..036a9c7 100644
+--- a/htpdate.c
++++ b/htpdate.c
+@@ -356,7 +356,7 @@ static int setclock( double timedelta, int setmode ) {
+ 		printlog( 0, "Adjusting %.3f seconds", timedelta );
+ 
+ 		/* Become root */
+-		swuid(0);
++		//swuid(0);
+ 		return( adjtime(&timeofday, NULL) );
+ 
+ 	case 2:					/* Set time */
+@@ -371,7 +371,7 @@ static int setclock( double timedelta, int setmode ) {
+ 		printlog( 0, "Set: %s", asctime(localtime(&timeofday.tv_sec)) );
+ 
+ 		/* Become root */
+-		swuid(0);
++		//swuid(0);
+ 		return( settimeofday(&timeofday, NULL) );
+ 
+ 	case 3:					/* Set frequency, but first an adjust */

@@ -1,0 +1,48 @@
+name: htpdate-daemon
+base: core18
+adopt-info: htpdate
+summary: Receive time and date settings via http/https
+description: |
+ The  HTTP Time Protocol (HTP) is used to synchronize a computers time with
+ web servers as reference time source. This program can be used instead
+ ntpdate or similar, in networks that has a firewall blocking the NTP port.
+ .
+ Htpdate will synchronize the computer time to Greenwich Mean Time (GMT),
+ using the timestamps from HTTP headers found in web servers response (the
+ HEAD method will be used to get the information).
+ .
+ Htpdate works through proxy servers. Accuracy of htpdate will be usually
+ within 0.5 seconds (better with multiple servers). 
+
+grade: stable
+confinement: strict
+
+apps:
+  htpdate:
+    command: htpdate
+    plugs:
+      - network
+      - network-bind
+      - time-control
+  daemon:
+    command: htpdated
+    daemon: forking
+    plugs:
+      - network
+      - network-bind
+      - time-control
+     
+parts:
+  htpdate:
+    plugin: make
+    source: https://salsa.debian.org/debian/htpdate.git
+    override-pull: |
+      snapcraftctl pull
+      git apply -v ../../../htpdate.patch
+      snapcraftctl set-version $(grep "#define VERSION" htpdate.c|sed 's/.*[a-zA-Z\t]//;s/"//g')
+  htpdated:
+    plugin: nil
+    source: .
+    override-build: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin
+      cp -avf htpdated $SNAPCRAFT_PART_INSTALL/bin/
