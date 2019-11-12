@@ -41,8 +41,8 @@ apps:
   daemon:
     command: htpdated
     daemon: forking
-    reload-command: pkill -HUP -F $PIDFILE
-    post-stop-command: rm -f $PIDFILE
+    reload-command: usr/bin/pkill -HUP -F $PIDFILE
+    post-stop-command: bin/rm -f $PIDFILE
     environment:
       PIDFILE: "/tmp/htpdate.pid"
     plugs:
