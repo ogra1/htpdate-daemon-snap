@@ -1,18 +1,12 @@
 #! /bin/sh
 
-HOSTS="$(snapctl get hosts)"
-PIDFILE="/tmp/htpdate.pid"
+HTP_SERVERS="$(snapctl get hosts)"
+XTRA_OPTS="$(snapctl get extra-opts)"
 
 while ! timedatectl status >/dev/null 2>&1; do
     echo "time control interface not connected yet, please run:"
     echo "snap connect $SNAP_NAME:time-control"
-    echo "snap restart $SNAP_NAME"
     exit 0
 done
 
-if [ -e "$PIDFILE" ]; then
-	kill -9 "$(cat $PIDFILE)" >/dev/null 2>&1
-	rm $PIDFILE
-fi
-
-htpdate -D -s -i "$PIDFILE" $HOSTS
+htpdate -D -s $XTRA_OPTS -i "$PIDFILE" $HTP_SERVERS

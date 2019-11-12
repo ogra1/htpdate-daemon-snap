@@ -23,6 +23,10 @@ description: |
  via a snap setting like:
  .
  snap set htpdate-daemon hosts="www.ubuntu.com www.linux.org"
+ .
+ You can also set additional options for the daemon
+ .
+ snap set htpdate-daemon extra-opts="-d"
 
 grade: stable
 confinement: strict
@@ -37,6 +41,10 @@ apps:
   daemon:
     command: htpdated
     daemon: forking
+    reload-command: /usr/bin/pkill -HUP -F $PIDFILE
+    post-stop-command: /bin/rm -f $PIDFILE
+    environment:
+      PIDFILE: "/tmp/htpdate.pid"
     plugs:
       - network
       - network-bind
@@ -50,6 +58,9 @@ parts:
       snapcraftctl pull
       git apply -v ../../../htpdate.patch
       snapcraftctl set-version $(grep "#define VERSION" htpdate.c|sed 's/.*[a-zA-Z\t]//;s/"//g')
+    stage-packages:
+      - coreutils
+      - procps
   htpdated:
     plugin: nil
     source: .
