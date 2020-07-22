@@ -1,4 +1,4 @@
 #! /bin/sh
 
 # set defaults
-[ -n "$(snapctl get hosts)" ] || snapctl set hosts="www.ubuntu.com"
+[ -n "$(snapctl get hosts)" ] || snapctl set hosts="google.com"

@@ -17,16 +17,16 @@ description: |
  To allow the snap package to adjust the time you need to connect the
  time-control interface after installation and restart the daemon:
  .
- snap connect htpdate-daemon:time-control
+     snap connect htpdate-daemon:time-control
  .
- You can set the list of hosts (default: www.ubuntu.com) to query for time
+ You can set the list of hosts (default: google.com) to query for time
  via a snap setting like:
  .
- snap set htpdate-daemon hosts="www.ubuntu.com www.linux.org"
+     snap set htpdate-daemon hosts="google.com www.linux.org"
  .
  You can also set additional options for the daemon
  .
- snap set htpdate-daemon extra-opts="-d"
+     snap set htpdate-daemon extra-opts="-d"
 
 grade: stable
 confinement: strict

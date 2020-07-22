@@ -1,3 +1,5 @@
 #! /bin/sh
 
-snapctl restart ${SNAP_NAME}.daemon 2>&1 || true
+if snapctl services ${SNAP_NAME}.daemon | grep -q inactive; then
+  snapctl start --enable ${SNAP_NAME}.daemon 2>&1 || true
+fi

@@ -1,3 +1,21 @@
 #! /bin/sh
 
+disable(){
+  snapctl stop --disable ${SNAP_NAME}.daemon
+}
+
+if ! snapctl is-connected time-control; then
+  echo "need write access to the system clock !!!"
+  echo "please run 'snap connect ${SNAP_NAME}:time-control"
+  echo
+  echo "disabling service for the moment"
+  disable
+  exit 0
+fi
+
+if snapctl services ${SNAP_NAME}.daemon | grep -q inactive; then
+  snapctl start --enable ${SNAP_NAME}.daemon 2>&1 || true
+fi
+
+
 snapctl restart ${SNAP_NAME}.daemon 2>&1 || true
