@@ -2,4 +2,7 @@
 
 if snapctl services ${SNAP_NAME}.daemon | grep -q inactive; then
   snapctl start --enable ${SNAP_NAME}.daemon 2>&1 || true
+  exit 0
 fi
+
+snapctl restart ${SNAP_NAME}.daemon 2>&1 || true
